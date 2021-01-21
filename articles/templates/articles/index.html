@@ -3,11 +3,12 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="container content-inner">
     <div class="main-col">
         <section class="jumbo-card card">
             <div class="card-image">
-                <a href="article.html"><img src="images/card.jpg" alt="" class="img-responsive"></a>
+                <a href="article.html"><img src="{% static 'images/card.jpg' %}" alt="" class="img-responsive"></a>
             </div>
             <div class="card-elements">
                 <div class="card-header">
@@ -27,7 +28,7 @@
         <div class="card">
             <div class="card-image">
                 <a href="article.html">
-                    <img src="images/card-1.jpg" alt="">
+                    <img src="{% static 'images/card-1.jpg' %}" alt="">
                 </a>
             </div>
             <div class="card-elements">
@@ -48,7 +49,7 @@
         <div class="card">
             <div class="card-image">
                 <a href="article.html">
-                    <img src="images/card-2.jpg" alt="">
+                    <img src="{% static 'images/card-2.jpg' %}" alt="">
                 </a>
             </div>
             <div class="card-elements">
@@ -66,7 +67,7 @@
         <div class="card">
             <div class="card-image">
                 <a href="article.html">
-                    <img src="images/card-3.jpg" alt="">
+                    <img src="{% static 'images/card-3.jpg' %}" alt="">
                 </a>
             </div>
             <div class="card-elements">

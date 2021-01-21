@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
 <div class="container article-content-inner">
     <div class="row">
         <div class="col-sm-12">
@@ -39,7 +40,7 @@
                     <p> It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
                         passages, and more recently with desktop publishing software like Aldus PageMaker including.</p>
                     <div class="image">
-                        <img alt="" src="images/details-1.jpg">
+                        <img alt="" src="{% static 'images/details-1.jpg' %}">
                         <p class="caption">It is a long established fact that a reader</p>
                     </div>
                     <h2><strong>There are many</strong></h2>
@@ -50,7 +51,7 @@
                         use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many
                         web sites still in their infancy. </p>
                     <!--<p>So much for <a href="#">the rumored maximum of 200 to 300 miles</a> Tesla Semi would be able to drive on a single charge. Instead, the all-electric semi truck is capable of driving 500 miles -- and that's <em>not</em> with an empty load. This is the range a Tesla Semi can haul a max 80,000-pound load. With 80% of freight in the U.S. moved less than 250 miles, this means truck operators will often be able to drive to their destination and back without having to charge.</p>-->
-                    <div class="image"><img alt="" src="images/details-2.jpg">
+                    <div class="image"><img alt="" src="{% static 'images/details-2.jpg' %}">
                         <p class="caption">There are many variations of passages</p>
                     </div>
                     <!--<p>What about charging? Tesla says a new network of Tesla Megachargers will enable 400 miles of charge in just 30 minutes. And like Tesla's existing Supercharger network, there will be enough charging locations to enable long-distance travel worldwide, Tesla said.</p>-->
@@ -72,7 +73,7 @@
                         <li>There are many variations.</li>
                         <li>Impact-resistant glass.</li>
                     </ul>
-                    <div class="image"><img alt="" src="images/details-3.jpg">
+                    <div class="image"><img alt="" src="{% static 'images/details-3.jpg' %}">
                         <p class="caption">It is a long established fact that</p>
                     </div>
                     <ul>
@@ -90,7 +91,7 @@
                         voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
                         eos qui ratione voluptatem sequi.</p>
                     <!--<p>Just when Tesla's product event looked like it was over, the electric-car maker pulled one of <strong>Apple</strong>'s <a href="#">"one more thing" surprise announcements</a>. After a false event ending, lights dimmed, and a new Tesla Roadster rolled out of the back of a Tesla Semi cargo bay to the tune of "Renegades of Funk" by Rage Against the Machine.</p>-->
-                    <div class="image"><img alt="" src="images/details-4.jpg">
+                    <div class="image"><img alt="" src="{% static 'images/details-4.jpg' %}">
                         <p class="caption">Ut enim ad minima veniam, quis nostrum.</p>
                     </div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -106,7 +107,7 @@
                         <li>Sed a massa tincidunt.</li>
                     </ul>
                     <p>Vivamus pharetra odio pulvinar <em>base</em> non hendrerit.</p>
-                    <div class="image"><img alt="" src="images/details-5.jpg">
+                    <div class="image"><img alt="" src="{% static 'images/details-5.jpg' %}">
                         <p class="caption">Phasellus vitae felis vitae elit eleifend iaculis in in tellus.&nbsp;</p>
                     </div>
                     <h2><strong>Curabitur ullamcorper?</strong></h2>
@@ -120,7 +121,7 @@
                         words, consectetur, from a Lorem</p>
                     <p>There are many variations of passages of Lorem Ipsum available, but the majority.</p>
                     <div class="image">
-                        <img alt="" src="images/details-6.jpg">
+                        <img alt="" src="{% static 'images/details-6.jpg' %}">
                         <p class="caption">Contrary to popular belief, Lorem Ipsum.</p>
                     </div>
                     <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
@@ -175,7 +176,7 @@
                     <div>
                         <span class="image-wrap">
                             <a href="#">
-                                <img src="images/related-1.png" class="img-responsive" alt="">
+                                <img src="{% static 'images/related-1.png" class="img-responsive" alt="">
                             </a>
                         </span>
                         <h3>Apple</h3>
@@ -203,7 +204,7 @@
                     <div>
                         <span class="image-wrap">
                             <a href="#">
-                                <img src="images/related-2.png" class="img-responsive" alt="">
+                                <img src="{% static 'images/related-2.png" class="img-responsive" alt="">
                             </a>
                         </span>
                         <h3>Tesla</h3>
@@ -231,7 +232,7 @@
                     <div>
                         <span class="image-wrap">
                             <a href="#">
-                                <img src="images/related-3.png" class="img-responsive" alt="">
+                                <img src="{% static 'images/related-3.png" class="img-responsive" alt="">
                             </a>
                         </span>
                         <h3>Twitter</h3>
