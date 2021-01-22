@@ -59,33 +59,34 @@
                             <a href="#">
                                 <img src="{% static 'images/related-3.png' %}" class="img-responsive" alt="">
                                 </a>
+                        </span>
+                        <h3>{{ quote.CompanyName}}</h3>
+                        <h4>
+                            <span class="ticker">
+                                <a title="{{ quote.CompanyName }} Stock Quote" href="#">
+                                    {{ quote.Exchange }}:<span class="symbol">{{ quote.Symbol }}</span>
+                                </a>
                             </span>
-                            <h3>{{ quote.CompanyName}}</h3>
-                            <h4>
-                                <span class="ticker">
-                                    <a title="{{ quote.CompanyName }} Stock Quote" href="#">
-                                        {{ quote.Exchange }}:<span class="symbol">{{ quote.Symbol }}</span>
-                                    </a>
-                                </span>
+                        </h4>
+                        <aside class="price-quote-container">
+                            <h4 class="current-price">
+                                ${{ quote.CurrentPrice.Amount }}
                             </h4>
-                            <aside class="price-quote-container">
-                                <h4 class="current-price">
-                                    ${{ quote.CurrentPrice.Amount }}
-                                </h4>
-                                <h4 class="price-change-amount {% if quote.Change.Amount >= 0 %}price-pos{% else %}price-neg{% endif %}">
-                                    {% if quote.change.Amount >= 0 %}
-                                    ${{ quote.Change.Amount }}
-                                    {% else %}
-                                    ${{ quote.Change.Amount|cut:"-"}}
-                                    {% endif %}
-                                </h4>
-                                <h4 class="price-change-percent {% if quote.PercentChange.Value >= 0 %}price-pos{% else %}price-neg{% endif %}">
-                                    ({{ quote.PercentChange.Value|floatformat:2 }}%)
-                                </h4>
-        </aside>
-    </div>
-</div>
-{% endfor %}
+                            <h4 class="price-change-amount {% if quote.Change.Amount >= 0 %}price-pos{% else %}price-neg{% endif %}">
+                                {% if quote.change.Amount >= 0 %}
+                                ${{ quote.Change.Amount }}
+                                {% else %}
+                                ${{ quote.Change.Amount|cut:"-"}}
+                                {% endif %}
+                            </h4>
+                            <h4 class="price-change-percent {% if quote.PercentChange.Value >= 0 %}price-pos{% else %}price-neg{% endif %}">
+                                ({{ quote.PercentChange.Value|floatformat:2 }}%)
+                            </h4>
+                        </aside>
+                    </div>
+                </div>
+                {% endfor %}
+                <button id="quotes-shuffler" class="btn btn-primary">Shuffle</button>
 </section>
 <section class="read-more-section">
     <div class="block-title">
@@ -101,4 +102,7 @@
 </aside>
 </div>
 </div>
+{% endblock %}
+{% block extrajs %}
+<script src="{% static 'js/article-detail.js' %}"></script>
 {% endblock %}
