@@ -9,21 +9,27 @@ import json
 import functools
 import random
 
-
 @functools.cache
-def get_content_api(filename='data/content_api.json'):
+def load_data_from_file(filename):
     with open(filename, 'rb') as f:
         data = json.load(f)
         return data
     # TODO: what's the default here? Should be an exception but whichone?
     raise RuntimeError("API data file not found.")
 
+def get_content_api():
+    return load_data_from_file('data/content_api.json')
 
-def get_random_articles(limit):
+def get_quotes_api():
+    return load_data_from_file('data/quotes_api.json')
+
+def get_random_articles(limit, exclude=[]):
     data = get_content_api()
     articles = data.get('results', [])
+    
+    # Filter out excludes
+    articles = [art for art in articles if art not in exclude]
     return random.sample(articles, limit)
-
 
 def get_article(uuid):
     # The json load is just a string, whereas flask uses as python uuid object, so just convert to a string
@@ -35,7 +41,6 @@ def get_article(uuid):
             return article
     raise LookupError("Article with uuid: {} not found".format(uuid))
 
-
 def get_articles_with_tag(tag, limit=10):
     data = get_content_api()
     res = []
@@ -43,3 +48,7 @@ def get_articles_with_tag(tag, limit=10):
         if any(tag == x['slug'] for x in article['tags']):
             res.append(article)
     return res[:limit]
+
+def get_random_quotes(limit):
+    data = get_quotes_api()
+    return random.sample(data, limit)
