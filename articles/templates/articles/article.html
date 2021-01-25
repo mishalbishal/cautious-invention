@@ -45,6 +45,9 @@
                     {{ article.disclosure|safe }}
                 </div>
             </section>
+            {% load comments %}
+            <div class="comments">{% render_comment_list for barticle %}</div>
+            <div class="comments-form">{% render_comment_form for barticle %}</div>
         </main>
         <aside class="col-sm-5 col-md-4 p-l">
             <section class="related-tickers">
