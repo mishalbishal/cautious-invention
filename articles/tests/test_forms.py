@@ -9,5 +9,4 @@ class EmailOptionalFormTest(TestCase):
     def test_email_field_is_optional(self):
         article = Article.objects.create()
         form = django_comments.get_form()(article)
-        print(form)
         self.assertFalse(form.fields['email'].required)

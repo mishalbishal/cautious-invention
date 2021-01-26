@@ -36,7 +36,7 @@
             </div>
             <section class="article-body">
                 <div class="article-content">
-                    {{ article.body|safe }}
+                    {{ article.body|cut:"{%sfr%}"|safe }}
                     <div id="pitch">
                         {{ article.pitch.text|safe }}
                     </div>
