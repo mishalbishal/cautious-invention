@@ -1,3 +1,4 @@
 Django>=3.0,<4.0
 psycopg2-binary>=2.8
 django-contrib-comments>=2.0,<3.0
+django-comments-xtd>=2.0,<3.0

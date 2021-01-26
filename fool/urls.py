@@ -21,6 +21,6 @@ from articles import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('articles/', include('articles.urls')),
-    path('comments/', include('django_comments.urls')),
+    path('comments/', include('django_comments_xtd.urls')),
     path('admin/', admin.site.urls),
 ]

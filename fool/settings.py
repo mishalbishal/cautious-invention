@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'articles',
 
+    'django_comments_xtd',
     'django_comments',
 
     'django.contrib.admin',
@@ -47,6 +48,11 @@ INSTALLED_APPS = [
 
 # django_comments requires site id
 SITE_ID = 1
+
+COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_MAX_THREAD_LEVEL = 2
+COMMENTS_XTD_CONFIRM_EMAIL = False
+COMMENTS_XTD_FORM_CLASS = 'articles.forms.EmailOptionalForm'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
