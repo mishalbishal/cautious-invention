@@ -45,6 +45,14 @@
                     {{ article.disclosure|safe }}
                 </div>
             </section>
+            {% load comments %}
+            {% load comments_xtd %}
+            <div class="comments-container">
+                {% render_xtdcomment_tree for barticle %}
+                <div class="comments-form">
+                    {% render_comment_form for barticle %}
+                </div>
+            </div>
         </main>
         <aside class="col-sm-5 col-md-4 p-l">
             <section class="related-tickers">

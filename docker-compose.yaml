@@ -7,13 +7,25 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  redis:
+    image: "redis:alpine"
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: ./docker-entrypoint.sh
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+      - redis
+  celery:
+    build: .
+    # Need pool=solo since pools aren't supported in windows or something.
+    command: celery -A fool worker -l info --pool=solo
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
 
