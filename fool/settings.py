@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 
     'django_comments_xtd',
     'django_comments',
+    'djcelery_email',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,10 +50,24 @@ INSTALLED_APPS = [
 # django_comments requires site id
 SITE_ID = 1
 
+# Configuration for django_comments_xtd app.
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 2
+# Allows anonymous comments without email confirmation.
 COMMENTS_XTD_CONFIRM_EMAIL = False
 COMMENTS_XTD_FORM_CLASS = 'articles.forms.EmailOptionalForm'
+# The following setting uses default email transport, which I've configured
+# to use CeleryEmailBackend.
+COMMENTS_XTD_THREADED_EMAILS = False
+
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+CELERY_EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
