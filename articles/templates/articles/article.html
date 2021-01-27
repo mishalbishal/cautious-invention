@@ -23,9 +23,11 @@
                 <div class="author-and-date">
                     <div class="author-byline">
                         <div class="author-name">{{ article.byline }}</div>
+                        {% with author=article.authors.first %}
                         <div class="author-username">
-                            <!--(<a href="#">TMFDanielSparks</a>)--> {{ article.authors.0.username|default:"" }}
+                            <a href="{% url 'author-hotlink' author.author_id %}">{{ author.username|default:"" }}</a>
                         </div>
+                        {% endwith %}
 
                     </div>
                     <div class="article-pub-date">

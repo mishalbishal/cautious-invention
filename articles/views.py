@@ -43,3 +43,8 @@ def logo_image(request, symbol):
     template = "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Fart%2Fcompanylogos%2Fmark%2F{}.png&w=64&h=64&op=resize"
     url = template.format(symbol)
     return redirect(url)
+
+
+def hotlink_author_profile(request, author_id):
+    template = "https://www.fool.com/author/{}/"
+    return redirect(template.format(author_id))
