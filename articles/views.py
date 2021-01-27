@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from . import data
 from .models import Article
@@ -15,21 +15,24 @@ def index(request):
 
 
 def detail(request, uuid):
-    article = data.get_article(uuid)
-    suggested = data.get_random_articles(5, exclude=[article])
+    article = get_object_or_404(Article, uuid=uuid)
+    qs = Article.objects.exclude(uuid=uuid)
+
+    # Ordering by ? is expensive. But it's fine for 10 articles.
+    # I wouldn't do this in production, but keeping it here
+    # and listing alternatives:
+    # * Use postgres' tablesample to get approximate random articles.
+    # * Use an autoincrement id field, then choose a random sample in range (1, last_autoincrement_id).
+    qs = qs.order_by('?')
+    suggested = qs.all()[:3]
     quotes = data.get_random_quotes(3)
 
-    try:
-        barticle = Article.objects.get(uuid=article['uuid'])
-    except Article.DoesNotExist:
-        barticle = Article.objects.create(uuid=article['uuid'])
-    # TODO: raise 404 if article not found, either via exception handling or truth checking
     return render(request, 'articles/article.html', {
         'article': article,
-        'barticle': barticle,
         'suggested': suggested,
         'quotes': quotes,
     })
+
 
 def logo_image(request, symbol):
     # Offloading finding the correct company logo image to the fool's image cdn.

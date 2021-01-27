@@ -26,6 +26,7 @@
                         <div class="author-username">
                             <!--(<a href="#">TMFDanielSparks</a>)--> {{ article.authors.0.username|default:"" }}
                         </div>
+
                     </div>
                     <div class="article-pub-date">
                         <div class="publication-date">
@@ -48,9 +49,9 @@
             {% load comments %}
             {% load comments_xtd %}
             <div class="comments-container">
-                {% render_xtdcomment_tree for barticle %}
+                {% render_xtdcomment_tree for article %}
                 <div class="comments-form">
-                    {% render_comment_form for barticle %}
+                    {% render_comment_form for article %}
                 </div>
             </div>
         </main>
