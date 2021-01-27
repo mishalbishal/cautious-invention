@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from . import data
 from .models import Article
@@ -30,3 +30,13 @@ def detail(request, uuid):
         'suggested': suggested,
         'quotes': quotes,
     })
+
+def logo_image(request, symbol):
+    # Offloading finding the correct company logo image to the fool's image cdn.
+    # Doing it via a view in case I want to change this later.
+    # Possible changes:
+    # * Add caching in front of the fool image cdn.
+    # * Handle 404s, by having a placeholder image.
+    template = "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Fart%2Fcompanylogos%2Fmark%2F{}.png&w=64&h=64&op=resize"
+    url = template.format(symbol)
+    return redirect(url)

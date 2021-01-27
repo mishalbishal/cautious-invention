@@ -65,8 +65,8 @@
                     <div>
                         <span class="image-wrap">
                             <a href="#">
-                                <img src="{% static 'images/related-3.png' %}" class="img-responsive" alt="">
-                                </a>
+                                <img src="{% url 'company-logo' quote.Symbol %}" class="img-responsive" alt="{{ quote.Symbol }}">
+                            </a>
                         </span>
                         <h3>{{ quote.CompanyName}}</h3>
                         <h4>
