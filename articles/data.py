@@ -23,6 +23,10 @@ def get_content_api():
 def get_quotes_api():
     return load_data_from_file('data/quotes_api.json')
 
+def get_all_articles():
+    data = get_content_api()
+    return data.get('results', [])
+
 def get_random_articles(limit, exclude=[]):
     data = get_content_api()
     articles = data.get('results', [])
