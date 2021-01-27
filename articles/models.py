@@ -1,5 +1,6 @@
 import uuid
 
+import autoslug
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -15,9 +16,10 @@ class Author(models.Model):
     username = models.CharField(max_length=100)
     author_id = models.IntegerField()  # Used to make url to fool.com
 
+
 class Article(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    
+
     headline = models.CharField(max_length=200, blank=True)
     byline = models.CharField(max_length=100, blank=True)
 
@@ -34,12 +36,14 @@ class Article(models.Model):
     authors = models.ManyToManyField(
         Author, through='AuthorArticle', related_name='articles')
 
+    slug = autoslug.AutoSlugField(
+        populate_from='headline', unique_with='publish_at', blank=True)
+
     # For the scope of this project, I omitted a few things. That I wasn't
     # using like: images, video, collections, bureau.
 
-
     def get_absolute_url(self):
-        return reverse('article-detail', kwargs={'uuid': self.uuid})
+        return reverse('article-detail', kwargs={'slug': self.slug})
 
 # Django can create an automatic through table, but having it explicit
 # allows an easier time adding meta-data if necessary in the future.
@@ -48,6 +52,7 @@ class Article(models.Model):
 class AuthorArticle(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
 
 class ArticleCommentModerator(CommentModerator):
     def moderate(self, comment, content_object, request):

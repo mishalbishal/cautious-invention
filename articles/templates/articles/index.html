@@ -13,7 +13,7 @@
             </div>
             <div class="card-elements">
                 <div class="card-header">
-                    <a href="{% url 'article-detail' featured.uuid %}">
+                    <a href="{{ featured.get_absolute_url }}">
                         <h3>{{ featured.headline }}</h3>
                     </a>
                     <p class="author">{{ featured.byline }} | {{ featured.publish_at }}</p>
@@ -28,13 +28,13 @@
         {% for article in articles %}
             <div class="card">
                 <div class="card-image">
-                    <a href="{% url 'article-detail' article.uuid %}">
+                    <a href="{{ article.get_absolute_url }}">
                         <img src="{{ article.images.0.image }}" alt="">
                     </a>
                 </div>
                 <div class="card-elements">
                     <div class="card-header">
-                        <a href="{% url 'article-detail' article.uuid %}">
+                        <a href="{{ article.get_absolute_url }}">
                             <h4>{{ article.headline }}</h4>
                         </a>
                         <p class="author">{{ article.byline }} | {{ article.publish_at |date }}</p>

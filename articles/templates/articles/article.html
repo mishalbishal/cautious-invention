@@ -106,7 +106,7 @@
     </div>
     <ul class="two-line-list">
         {% for article in suggested %}
-        <li><a href="{% url 'article-detail' article.uuid %}">{{ article.headline }}</a></li>
+        <li><a href="{{ article.get_absolute_url }}">{{ article.headline }}</a></li>
         {% endfor %}
     </ul>
 </section>

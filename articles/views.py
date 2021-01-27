@@ -3,20 +3,24 @@ from django.shortcuts import render, redirect, get_object_or_404
 from . import data
 from .models import Article
 
-
 def index(request):
     # TODO: what if no featured?
     featured = data.get_articles_with_tag('10-promise', limit=1)[0]
-    articles = data.get_random_articles(3, exclude=[featured])
+    # TODO: implement tags, for now using 'uuid'
+    featured = Article.objects.get(uuid='a7acd8c8-c5ce-11e7-9fa6-0050569d4be0')
+    qs = Article.objects.exclude(uuid=featured.uuid)
+    qs = qs.order_by('?')
+    suggested = qs.all()[:3]
+    
     return render(request, 'articles/index.html', {
         'featured': featured,
-        'articles': articles,
+        'articles': suggested,
     })
 
 
-def detail(request, uuid):
-    article = get_object_or_404(Article, uuid=uuid)
-    qs = Article.objects.exclude(uuid=uuid)
+def detail(request, slug):
+    article = get_object_or_404(Article, slug=slug)
+    qs = Article.objects.exclude(uuid=article.uuid)
 
     # Ordering by ? is expensive. But it's fine for 10 articles.
     # I wouldn't do this in production, but keeping it here
@@ -24,7 +28,7 @@ def detail(request, uuid):
     # * Use postgres' tablesample to get approximate random articles.
     # * Use an autoincrement id field, then choose a random sample in range (1, last_autoincrement_id).
     qs = qs.order_by('?')
-    suggested = qs.all()[:3]
+    suggested = qs.all()[:5]
     quotes = data.get_random_quotes(3)
 
     return render(request, 'articles/article.html', {
