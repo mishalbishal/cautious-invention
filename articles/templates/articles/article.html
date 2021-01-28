@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}
-{{ article.headline }}
-{% endblock %}
+{% block title %}{{ article.headline }}{% endblock %}
 
 {% block content %}
 {% load static %}
@@ -23,20 +21,23 @@
                 <div class="author-and-date">
                     <div class="author-byline">
                         <div class="author-name">{{ article.byline }}</div>
-                        <div class="author-username">
-                            <!--(<a href="#">TMFDanielSparks</a>)--> {{ article.authors.0.username|default:"" }}
-                        </div>
+                        {% with author=article.authors.first %}
+                            <div class="author-username">
+                                <a href="{% url 'author-hotlink' author.author_id %}">{{ author.username|default:"" }}</a>
+                            </div>
+                        {% endwith %}
+
                     </div>
                     <div class="article-pub-date">
                         <div class="publication-date">
-                            {{ article.publish_at }}
+                            {{ article.publish_at|date }} at {{ article.publish_at|time:"g:iA" }}
                         </div>
                     </div>
                 </div>
             </div>
             <section class="article-body">
                 <div class="article-content">
-                    {{ article.body|safe }}
+                    {{ article.body|cut:"{%sfr%}"|safe }}
                     <div id="pitch">
                         {{ article.pitch.text|safe }}
                     </div>
@@ -47,10 +48,15 @@
             </section>
             {% load comments %}
             {% load comments_xtd %}
+            <hr>
             <div class="comments-container">
-                {% render_xtdcomment_tree for barticle %}
+                <h5>Article Comments</h5>
+                <p></p>
+                <div>
+                    {% render_xtdcomment_tree for article %}
+                </div>
                 <div class="comments-form">
-                    {% render_comment_form for barticle %}
+                    {% render_comment_form for article %}
                 </div>
             </div>
         </main>
@@ -65,8 +71,8 @@
                     <div>
                         <span class="image-wrap">
                             <a href="#">
-                                <img src="{% static 'images/related-3.png' %}" class="img-responsive" alt="">
-                                </a>
+                                <img src="{% url 'company-logo' quote.Symbol %}" class="img-responsive" alt="{{ quote.Symbol }}">
+                            </a>
                         </span>
                         <h3>{{ quote.CompanyName}}</h3>
                         <h4>
@@ -103,7 +109,7 @@
     </div>
     <ul class="two-line-list">
         {% for article in suggested %}
-        <li><a href="{% url 'article-detail' article.uuid %}">{{ article.headline }}</a></li>
+        <li><a href="{{ article.get_absolute_url }}">{{ article.headline }}</a></li>
         {% endfor %}
     </ul>
 </section>
