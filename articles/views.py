@@ -9,7 +9,7 @@ def index(request):
     qs = Article.objects.exclude(uuid=featured.uuid)
     qs = qs.order_by('?')
     suggested = qs.all()[:3]
-    
+
     return render(request, 'articles/index.html', {
         'featured': featured,
         'articles': suggested,

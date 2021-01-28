@@ -7,42 +7,13 @@
 <div class="container content-inner">
     <div class="main-col">
         <section class="jumbo-card card">
-            <div class="card-image">
-                <a href="{{ featured.get_absolute_url }}"><img src="{{ featured.images.0.image }}"
-                        alt="" class="img-responsive"></a>
-            </div>
-            <div class="card-elements">
-                <div class="card-header">
-                    <a href="{{ featured.get_absolute_url }}">
-                        <h3>{{ featured.headline }}</h3>
-                    </a>
-                    <p class="author">{{ featured.byline }} | {{ featured.publish_at }}</p>
-                </div>
-                <div class="card-copy">
-                    <p>{{ featured.promo }}</p>
-                </div>
-            </div>
+            {% include "articles/article_card_snippet.html" with article=featured only %}
         </section>
     </div>
     <div class="cards row">
         {% for article in articles %}
             <div class="card">
-                <div class="card-image">
-                    <a href="{{ article.get_absolute_url }}">
-                        <img src="{{ article.images.0.image }}" alt="">
-                    </a>
-                </div>
-                <div class="card-elements">
-                    <div class="card-header">
-                        <a href="{{ article.get_absolute_url }}">
-                            <h4>{{ article.headline }}</h4>
-                        </a>
-                        <p class="author">{{ article.byline }} | {{ article.publish_at |date }}</p>
-                    </div>
-                    <div class="card-copy">
-                        {{ article.promo }}
-                    </div>
-                </div>
+                {% include "articles/article_card_snippet.html" with article=article only %}
             </div>
         {% endfor %}
     </div>

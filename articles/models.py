@@ -18,6 +18,17 @@ class Author(models.Model):
     author_id = models.IntegerField()  # Used to make url to fool.com
 
 
+class Image(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    created = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(null=True, default=timezone.now)
+
+    name = models.CharField(max_length=200, blank=True)
+    url = models.URLField()
+
+    featured = models.BooleanField(default=False)
+
+
 class Article(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
@@ -36,6 +47,10 @@ class Article(models.Model):
 
     authors = models.ManyToManyField(
         Author, through='AuthorArticle', related_name='articles')
+
+    images = models.ManyToManyField(
+        Image, related_name='articles'
+    )
 
     slug = autoslug.AutoSlugField(
         populate_from='headline', unique_with='publish_at', blank=True)
