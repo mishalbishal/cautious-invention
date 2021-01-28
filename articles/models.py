@@ -8,6 +8,8 @@ from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 import tagulous
 
+from articles.conf import settings
+
 
 class Author(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -16,6 +18,9 @@ class Author(models.Model):
     byline = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
     author_id = models.IntegerField()  # Used to make url to fool.com
+
+    def __str__(self):
+        return self.username
 
 
 class Image(models.Model):
@@ -60,6 +65,9 @@ class Article(models.Model):
     # For the scope of this project, I omitted a few things. That I wasn't
     # using like: images, video, collections, bureau.
 
+    def __str__(self):
+        return self.headline
+
     def get_absolute_url(self):
         return reverse(
             'article-detail',
@@ -82,8 +90,8 @@ class AuthorArticle(models.Model):
 
 class ArticleCommentModerator(CommentModerator):
     def moderate(self, comment, content_object, request):
-        # if not request.user.is_authenticated:
-        #     return True
+        if settings.ARTICLES_COMMENT_MODERATION_ANONYMOUS:
+            return not request.user.is_authenticated
         return super(ArticleCommentModerator, self).moderate(comment, content_object, request)
 
 
