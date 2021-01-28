@@ -43,7 +43,15 @@ class Article(models.Model):
     # using like: images, video, collections, bureau.
 
     def get_absolute_url(self):
-        return reverse('article-detail', kwargs={'slug': self.slug})
+        return reverse(
+            'article-detail',
+            kwargs={
+                'year': self.publish_at.year,
+                'month': int(self.publish_at.strftime('%m').lower()),
+                'day': self.publish_at.day,
+                'slug': self.slug,
+            },
+        )
 
 # Django can create an automatic through table, but having it explicit
 # allows an easier time adding meta-data if necessary in the future.

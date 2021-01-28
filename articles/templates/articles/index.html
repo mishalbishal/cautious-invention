@@ -8,7 +8,7 @@
     <div class="main-col">
         <section class="jumbo-card card">
             <div class="card-image">
-                <a href="{% url 'article-detail' 'f52c15f2-c5a9-11e7-8889-0050569d4be0' %}"><img src="{{ featured.images.0.image }}"
+                <a href="{{ featured.get_absolute_url }}"><img src="{{ featured.images.0.image }}"
                         alt="" class="img-responsive"></a>
             </div>
             <div class="card-elements">

@@ -18,7 +18,7 @@ def index(request):
     })
 
 
-def detail(request, slug):
+def detail(request, year, month, day, slug):
     article = get_object_or_404(Article, slug=slug)
     qs = Article.objects.exclude(uuid=article.uuid)
 
