@@ -24,15 +24,15 @@
                     <div class="author-byline">
                         <div class="author-name">{{ article.byline }}</div>
                         {% with author=article.authors.first %}
-                        <div class="author-username">
-                            <a href="{% url 'author-hotlink' author.author_id %}">{{ author.username|default:"" }}</a>
-                        </div>
+                            <div class="author-username">
+                                <a href="{% url 'author-hotlink' author.author_id %}">{{ author.username|default:"" }}</a>
+                            </div>
                         {% endwith %}
 
                     </div>
                     <div class="article-pub-date">
                         <div class="publication-date">
-                            {{ article.publish_at }}
+                            {{ article.publish_at|date }} at {{ article.publish_at|time:"g:iA" }}
                         </div>
                     </div>
                 </div>
@@ -50,8 +50,11 @@
             </section>
             {% load comments %}
             {% load comments_xtd %}
+            <hr>
             <div class="comments-container">
-                {% render_xtdcomment_tree for article %}
+                <div>
+                    {% render_xtdcomment_tree for article %}
+                </div>
                 <div class="comments-form">
                     {% render_comment_form for article %}
                 </div>
