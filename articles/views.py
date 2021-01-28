@@ -5,9 +5,7 @@ from .models import Article
 
 def index(request):
     # TODO: what if no featured?
-    featured = data.get_articles_with_tag('10-promise', limit=1)[0]
-    # TODO: implement tags, for now using 'uuid'
-    featured = Article.objects.get(uuid='a7acd8c8-c5ce-11e7-9fa6-0050569d4be0')
+    featured = Article.objects.filter(tags__name__in=['10% Promise'])[0]
     qs = Article.objects.exclude(uuid=featured.uuid)
     qs = qs.order_by('?')
     suggested = qs.all()[:3]

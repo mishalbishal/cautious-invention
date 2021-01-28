@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
+import tagulous
 
 
 class Author(models.Model):
@@ -39,6 +40,8 @@ class Article(models.Model):
     slug = autoslug.AutoSlugField(
         populate_from='headline', unique_with='publish_at', blank=True)
 
+    tags = tagulous.models.TagField()
+
     # For the scope of this project, I omitted a few things. That I wasn't
     # using like: images, video, collections, bureau.
 
@@ -64,8 +67,8 @@ class AuthorArticle(models.Model):
 
 class ArticleCommentModerator(CommentModerator):
     def moderate(self, comment, content_object, request):
-        if not request.user.is_authenticated:
-            return True
+        # if not request.user.is_authenticated:
+        #     return True
         return super(ArticleCommentModerator, self).moderate(comment, content_object, request)
 
 
