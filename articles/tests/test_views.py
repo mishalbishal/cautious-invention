@@ -3,12 +3,11 @@ from unittest import skip
 
 from django.test import TestCase
 from django.urls import reverse
-# from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-# from selenium.webdriver.firefox.webdriver import WebDriver
+
+from articles.models import Article, Author
 
 
 class IndexViewTest(TestCase):
-    @skip
     def test_uses_correct_template(self):
         response = self.client.get(reverse('index'))
 
@@ -17,74 +16,47 @@ class IndexViewTest(TestCase):
         # Check we used correct template
         self.assertTemplateUsed(response, 'articles/index.html')
 
-
-# class IndexViewSeleniumTest(StaticLiveServerTestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         super().setUpClass()
-#         cls.selenium = WebDriver()
-#         cls.selenium.implicitly_wait(10)
-
-#     @classmethod
-#     def tearDownClass(cls):
-#         cls.selenium.quit()
-#         super().tearDownClass()
-
-#     # Make this a selenium testscase.
-#     def test_view_has_correct_title(self):
-#         self.selenium.get('%s%s' % (self.live_server_url, '/'))
-#         title_element = self.selenium.find_element_by_tag_name("title")
-#         self.assertEquals(
-#             title_element.get_attribute("value"),
-#             "Homepage",
-#         )
-#     # Make this a selenium testscase.
-
-#     @skip
-#     def test_correct_url_for_featured_image(self):
-#         pass
-#         # ??
-#     # Make this a selenium testscase.
-
-#     @skip
-#     def test_fallback_if_no_featured(self):
-#         pass
+    # Should be a selenium test.
+    def test_view_has_correct_title(self):
+        response = self.client.get(reverse('index'))
+        self.assertContains(response, "<title>{}</title>".format("Homepage"))
 
 
 class ArticleDetailViewTest(TestCase):
+    def setUp(self):
+        author = Author.objects.create(
+            first_name='Test',
+            last_name='User',
+            byline='Test User',
+            username='TMFtestuser',
+            author_id=42,
+        )
+        article = Article.objects.create(
+            headline='Article title',
+        )
+        article.authors.set([author])
+
     def test_uses_correct_template(self):
+        article = Article.objects.filter(headline='Article title').all()[0]
         response = self.client.get(
-            reverse('article-detail', args=[uuid.uuid4()])
+            article.get_absolute_url()
         )
         # Check that we got a response "success"
         self.assertEqual(response.status_code, 200)
         # Check we used correct template
         self.assertTemplateUsed(response, 'articles/article.html')
 
-    @skip   # Until the view uses get_object_or_404.
     def test_non_existent_article(self):
-        response = self.client.get(
-            reverse('article-detail', args=[uuid.uuid4()])
-        )
+        article = Article.objects.filter(headline='Article title').all()[0]
+        article.delete()
+        response = self.client.get(article.get_absolute_url())
         self.assertEqual(response.status_code, 404)
 
-    # Make this a selenium test case since we're testing the rendered html.
-    @skip
-    def test_contains_comment_form(self):
-        article = data.get_random_articles(1)[0]
-        arg = article['uuid']
-        response = self.client.get(reverse('article-detail', args=[arg]))
-        self.assertContains(response, 'TimerX')
-
-    # Make this a selenium testscase.
-    @skip
+    # Should be a selenium test.
     def test_view_has_correct_title(self):
-        # response = self.client.get(reverse('article-detail'))
-        # self.assertContains(response, "<title>{}</title>".format("Homepage"))
-        pass
-
-    # Make this a selenium testscase.
-    @skip
-    def test_shuffle_button_components(self):
-        pass
-        # Ensure button exists and relevant javascript also exists.
+        article = Article.objects.filter(headline='Article title').all()[0]
+        response = self.client.get(article.get_absolute_url())
+        self.assertContains(
+            response,
+            "<title>{}</title>".format(article.headline),
+        )

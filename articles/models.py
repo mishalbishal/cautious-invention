@@ -47,7 +47,7 @@ class Article(models.Model):
 
     # Using default instead of auto_add_now since I'll be loading the articles from a fixture.
     created = models.DateTimeField(default=timezone.now)
-    publish_at = models.DateTimeField(null=True)
+    publish_at = models.DateTimeField(default=timezone.now, null=True)
     modified = models.DateTimeField(null=True, default=timezone.now)
 
     authors = models.ManyToManyField(
@@ -63,7 +63,7 @@ class Article(models.Model):
     tags = tagulous.models.TagField()
 
     # For the scope of this project, I omitted a few things. That I wasn't
-    # using like: images, video, collections, bureau.
+    # using like: video, collections, bureau.
 
     def __str__(self):
         return self.headline
@@ -79,11 +79,10 @@ class Article(models.Model):
             },
         )
 
-# Django can create an automatic through table, but having it explicit
-# allows an easier time adding meta-data if necessary in the future.
-
 
 class AuthorArticle(models.Model):
+    # Django can create an automatic through table, but having it explicit
+    # allows an easier time adding meta-data if necessary in the future.
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
 
